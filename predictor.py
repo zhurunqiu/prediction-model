@@ -35,8 +35,8 @@ TT = st.number_input("Tumor Tickness (mm):", min_value=0.01, max_value=20.0, val
 # TB: numerical input
 TB = st.number_input("Tumor Budding:", min_value=0, max_value=36, value=16)
 
-# BASO%: numerical input
-BASO = st.number_input("BASO:", min_value=0, max_value=1.5, value=0.8)
+# BASO: numerical input
+BASO = st.number_input("BASO:", min_value=0.0, max_value=1.5, value=0.8)
 
 # NLR: numerical input
 NLR = st.number_input("Neutrophil-to-Lymphocyte Ratio:", min_value=0.00, max_value=6.00, value=3.20)
@@ -90,7 +90,7 @@ if st.button("Predict"):
     
     explainer_shap = shap.TreeExplainer(model)    
     
-    shap_values = explainer.shap_values(pd.DataFrame([feature_values], columns=feature_names))
+    shap_values = explainer_shap.shap_values(pd.DataFrame([feature_values], columns=feature_names))
 
     if predicted_class == 1:
         shap.force_plot(explainer_shap.expected_value[1], shap_values[:,:,1], pd.DataFrame([feature_values], columns=feature_names), matplotlib=True)    
